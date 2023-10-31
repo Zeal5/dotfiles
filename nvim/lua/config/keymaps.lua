@@ -25,10 +25,10 @@ MAP('n', '<leader>+', ':vsplit<CR>')
 MAP('n', '<leader>-', ':split<CR>')
 
 -- move bewteen tabs using arrow keys
-MAP('n', '<leader><Left>', ':wincmd h<CR>')
-MAP('n', '<leader><Down>', ':wincmd j<CR>')
-MAP('n', '<leader><Up>', ':wincmd k<CR>')
-MAP('n', '<leader><Right>', ':wincmd l<CR>')
+MAP('n', '<C-h>', ':wincmd h<CR>')
+MAP('n', '<C-j>', ':wincmd j<CR>')
+MAP('n', '<C-k>', ':wincmd k<CR>')
+MAP('n', '<C-l>', ':wincmd l<CR>')
 
 -- Indent selected text with Tab
 MAP('v', '<Tab>', '>gv')
