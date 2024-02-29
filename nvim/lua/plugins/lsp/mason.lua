@@ -39,7 +39,9 @@ return {
         "stylua", -- lua formatter
         "black", -- python formatter
         "pylint", -- python linter
-			}
+			},
+			 -- auto-install configured servers (with lspconfig)
+			 automatic_installation = true, -- not the same as ensure_installed
     })
   end,
 }

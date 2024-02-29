@@ -1,4 +1,3 @@
----@diagnostic disable: unused-local
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
@@ -77,6 +76,66 @@ return {
       on_attach = on_attach,
 
     })
+
+		lspconfig['solidity'].setup({
+			cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
+			filetypes = { 'solidity' },
+      capabilities = capabilities,
+			single_file_support = true,
+			on_attach = on_attach,
+			require("lspconfig.util").root_pattern "foundry.toml",
+		 })
+
+		lspconfig['svelte'].setup({
+			cmd = { "svelteserver", "--stdio" },
+			filetypes = { "svelte" },
+      capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig['html'].setup({
+			filetypes = { "html", "svelte" ,"typescript", "typescriptreact", "typescript.tsx", "javascript"  },
+      capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig['cssls'].setup({
+			filetypes = { "html",  "svelte" ,"typescript", "typescriptreact", "typescript.tsx", "javascript"  },
+      capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig["tsserver"].setup({
+			filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript"  },
+      capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig['rust_analyzer'].setup({
+			capabilities = capabilities,
+			 on_attach = on_attach,
+			 settings = {
+				 ["rust-analyzer"] = {
+					 cargo = {
+						 allFeatures = true,
+						 loadOutDirsFromCheck = true,
+						 runBuildScripts = true,
+					 },
+					 checkOnSave = {
+						 allFeatures = true,
+						 command = "clippy",
+						 extraArgs = { "--no-deps" },
+					 },
+					 procMacro = {
+						 enable = true,
+						 ignored = {
+							 ["async-trait"] = { "async_trait" },
+							 ["napi-derive"] = { "napi" },
+							 ["async-recursion"] = { "async_recursion" },
+						 },
+					 },
+				 },
+			 },
+			})
 
     -- configure lua server (with special settings)
     lspconfig["lua_ls"].setup({
