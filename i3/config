@@ -68,6 +68,9 @@ title_align center
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# Mouse wrap to center of new screen
+# mouse_wraping output|none
+
 # switch/iterate between workspaces
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
@@ -289,15 +292,15 @@ bindsym XF86AudioPrev exec playerctl previous
 #bindsym $mod+p exec /usr/local/bin/switch-audio-port
 
 # App shortcuts
-bindsym $mod+w exec /usr/bin/firefox
+bindsym $mod+w exec /usr/bin/brave
 bindsym $mod+n exec /usr/bin/thunar
 
 # Screenshots 
-bindsym Print exec scrot ~/Pictures/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/Pictures/$(date +"%Y-%m-%d-%T")-screenshot.png"
+# bindsym Print exec scrot ~/Pictures/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/Pictures/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
 # Clipboard Screenshots
 #bindsym --release $mod+p exec scrot --select ~/Pictures/%Y-%m-%d-%T-screenshot.png
-bindsym --release $mod+p exec scrot -s -e 'xclip -selection clipboard -t image/png -i $f'
+bindsym --release $mod+p exec scrot -s -e 'xclip -selection clipboard -t image/png -i $f' --file '/home/bot/Pictures/screen_shots/%Y-%m-%d-%T-screenshot.png'
 
 
 
@@ -332,7 +335,7 @@ set $ws10 "10"
 
 # bind program to workspace and focus to them on startup:
 assign [class="Alacritty"] $ws1
-assign [class="(?i)firefox"] $ws2
+assign [class="(?i)brave"] $ws2
 assign [class="Thunar"] $ws3
 assign [class="thunderbird"] $ws4
 assign [class="code-oss"] $ws5
@@ -340,7 +343,7 @@ assign [class="TelegramDesktop"] $ws9
 
 # automatic set focus new window if it opens on another workspace than the current:
 for_window [class=Alacritty] focus
-for_window [class=(?i)firefox] focus
+for_window [class=(?i)brave] focus
 for_window [class=Thunar] focus
 for_window [class=Thunderbird] focus
 for_window [class=code-oss] focus
@@ -412,12 +415,14 @@ exec --no-startup-id dex --autostart --environment i3
 # exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
 # exec --no-startup-id sleep 2 && feh --bg-scale ~/Downloads/39044.jpg 
 exec --no-startup-id sleep 1 && feh --randomize --bg-scale --no-xinerama ~/Pictures/wallpapers/
-
+# start gpu fan monitor
+exec_always --no-startup-id ~/.monitor_gpu_fans.sh
 # set powersavings for display:
 # exec --no-startup-id xset s 480 dpms 600 600 600
 
 # disable power saving (for example if using xscreensaver)
-#exec --no-startup-id xset -dpms
+exec --no-startup-id xset s off
+exec --no-startup-id xset -dpms
 
 # use xautolock to use autosuspend rules for mobile devices
 # https://wiki.archlinux.org/title/Session_lock#xautolock
