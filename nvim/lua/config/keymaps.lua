@@ -3,6 +3,8 @@ MAP = vim.keymap.set
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+MAP('i', '<C-H>', '<C-w>')
+MAP('i', 'C-BS', "<C-w>", {noremap = true})
 MAP('n','s', '', {noremap = true})
 MAP("n", "<leader>l", "<cmd>Lazy<CR>", { desc = "Lazy" })
 MAP("i", "jj", "<ESC>", { desc = "Switch to noMAPal mode" })

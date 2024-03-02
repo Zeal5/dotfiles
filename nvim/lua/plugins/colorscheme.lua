@@ -1,66 +1,77 @@
 return {
-  -- "folke/tokyonight.nvim",
-  -- config = function()
-  --   vim.cmd("colorscheme tokyonight-night")
-  -- end
-	"rose-pine/neovim",
+	"EdenEast/nightfox.nvim",
+
 	config = function()
-	require('rose-pine').setup({
-		--- @usage 'auto'|'main'|'moon'|'dawn'
-		variant = 'main',
-		--- @usage 'main'|'moon'|'dawn'
-		dark_variant = 'main',
-		bold_vert_split = false,
-		dim_nc_background = false,
-		disable_background = false,
-		disable_float_background = false,
-		disable_italics = false,
-
-		--- @usage string hex value or named color from rosepinetheme.com/palette
-		groups = {
-			background = 'base',
-			background_nc = '_experimental_nc',
-			panel = 'surface',
-			panel_nc = 'base',
-			border = 'highlight_med',
-			comment = 'muted',
-			link = 'iris',
-			punctuation = 'subtle',
-
-			error = 'love',
-			hint = 'iris',
-			info = 'foam',
-			warn = 'gold',
-
-			headings = {
-				h1 = 'iris',
-				h2 = 'foam',
-				h3 = 'rose',
-				h4 = 'gold',
-				h5 = 'pine',
-				h6 = 'foam',
-			}
-			-- or set all headings at once
-			-- headings = 'subtle'
-		},
-
-		-- Change specific vim highlight groups
-		-- https://github.com/rose-pine/neovim/wiki/Recipes
-		highlight_groups = {
-			ColorColumn = { bg = 'rose' },
-
-			-- Blend colours against the "base" background
-			CursorLine = { bg = 'foam', blend = 10 },
-			StatusLine = { fg = 'love', bg = 'love', blend = 10 },
-
-			-- By default each group adds to the existing config.
-			-- If you only want to set what is written in this config exactly,
-			-- you can set the inherit option:
-			Search = { bg = 'gold', inherit = false },
-		}
-	})
-
-	-- Set colorscheme after options
-	vim.cmd('colorscheme rose-pine')
+		-- Default options
+		require('nightfox').setup({
+			options = {
+				styles = {               -- Style to be applied to different syntax groups
+					comments = "italic",     -- Value is any valid attr-list value `:help attr-list`
+					conditionals = "NONE",
+					constants = "NONE",
+					functions = "NONE",
+					keywords = "NONE",
+					numbers = "NONE",
+					operators = "NONE",
+					strings = "NONE",
+					types = "NONE",
+					variables = "NONE",
+				},
+			},
+			groups = {
+				-- As with specs and palettes, the values defined under `all` will be applied to every style.
+				all = {
+					-- If `link` is defined it will be applied over any other values defined
+					Whitespace = { link = "Comment" },
+					-- Specs are used for the template. Specs have their palette's as a field that can be accessed
+					IncSearch = { bg = "palette.cyan" },
+					-- As with specs and palettes, a specific style's value will be used over the `all`'s value.
+					PmenuSel = { bg = "#73daca", fg = "bg0" },
+					String = {fg = "#a3a2a2" },
+					Constant = {fg = "#7a7dff" },
+					Identifier = {fg = "#e31e2e" },
+					Function = {fg = "#c2bf69"},
+					-- Statement = {fg = "#f50a0a"},
+					-- Keyword = {fg = "#f50a0a"},
+					Exception = {fg = "#ffef0f"},
+					conditionals = {fg = "#faa2ee" },
+				},
+			},
+		})
+		-- setup must be called before loading
+		vim.cmd('colorscheme carbonfox')
 	end
 }
+--[[ 
+	 Repeat		for, do, while, etc.
+	 Label		case, default, etc.
+	 Operator	"sizeof", "+", "*", etc.
+	 Exception	try, catch, throw
+
+	*PreProc	generic Preprocessor
+	 Include	preprocessor #include
+	 Define		preprocessor #define
+	 Macro		same as Define
+	 PreCondit	preprocessor #if, #else, #endif, etc.
+
+	*Type		int, long, char, etc.
+	 StorageClass	static, register, volatile, etc.
+	 Structure	struct, union, enum, etc.
+	 Typedef	A typedef
+
+	*Special	any special symbol
+	 SpecialChar	special character in a constant
+	 Tag		you can use CTRL-] on this
+	 Delimiter	character that needs attention
+	 SpecialComment	special things inside a comment
+	 Debug		debugging statements
+
+	*Underlined	text that stands out, HTML links
+
+	*Ignore		left blank, hidden  |hl-Ignore|
+
+	*Error		any erroneous construct
+
+	*Todo		anything that needs extra attention; mostly the
+			keywords TODO FIXME and XXX
+]]

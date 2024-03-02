@@ -1,1 +1,1 @@
-vim.cmd('highlight @variable guifg=#c572fc')
+-- vim.cmd('highlight @variable guifg=#c572fc')
