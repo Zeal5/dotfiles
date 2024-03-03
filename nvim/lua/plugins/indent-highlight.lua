@@ -31,7 +31,8 @@ return{
 		require('ibl').setup({
 			indent = { highlight = highlight, char = "│",smart_indent_cap = true, priority = 1};
 			whitespace = { remove_blankline_trail = false, highlight = { "whitespace", "NonText" }, },
-			scope = { char = "╎", show_start = true, show_exact_scope = true, highlight = highlight,show_end = true, }
+			-- show_start and show_end shows the underlined start and end of scode
+			scope = { char = "╎", show_start = false, show_exact_scope = true, highlight = highlight,show_end = true, } 
 		})
 	end
 
