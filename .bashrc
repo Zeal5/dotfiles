@@ -110,4 +110,5 @@ export PATH="$PATH:/home/bot/.local/bin"
 export PATH="/home/bot/.local/share/solana/install/active_release/bin:$PATH"
 export PATH="$PATH:/home/bot/.foundry/bin"
 export PATH="/home/bot/bin:$PATH"
-export PATH="/home/bot/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+
