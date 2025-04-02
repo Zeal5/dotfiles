@@ -1,0 +1,83 @@
+{
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"] ,
+    "modules-right": ["tray","memory","disk", "pulseaudio","battery","clock"],
+	"hyprland/window": {
+	"format": "{initialTitle}",
+},
+	"hyprland/workspaces": {
+	"format": "{name}{icon}",
+	"format-icons": {
+		"1": ": ",
+		"2": ": ",
+		"default": ""
+	},
+},
+"memory": {
+  "format": "💾{used:0.1f}/{total:0.1f} GB",
+		"align": "center",
+},
+	"disk" :{
+	"interval":60,
+		"format": "⛁ {percentage_used}%",
+		"align": "left",
+	},
+	"battery": {
+    "bat": "BAT0",
+    "states": {
+        "good": 95,
+        "warning": 30,
+        "critical": 15
+    },
+    "format": "🔋{capacity}%",
+    "format-charging": "⚡{capacity}%",
+    "format-plugged": "{capacity}% (plugged)",
+    "interval": 60
+},
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+    },
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}",
+		"on-click": "gnome-calendar"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": "0% {icon} ",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/scratchpad-indicator": {
+        "format-text": "{}hi",
+        "return-type": "json",
+        "interval": 3,
+        "exec": "~/.local/bin/scratchpad-indicator 2> /dev/null",
+        "exec-if": "exit 0",
+        "on-click": "swaymsg 'scratchpad show'",
+        "on-click-right": "swaymsg 'move scratchpad'"
+    }
+}
