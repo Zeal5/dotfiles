@@ -1,164 +1,211 @@
 return {
-  "neovim/nvim-lspconfig",
-  event = { "BufReadPre", "BufNewFile" },
-  dependencies = {
-    "hrsh7th/cmp-nvim-lsp",
-    { "antosha417/nvim-lsp-file-operations", config = true },
-  },
-  config = function()
-    -- import lspconfig plugin
-    local lspconfig = require("lspconfig")
+	"neovim/nvim-lspconfig",
+	event = { "BufReadPre", "BufNewFile" },
+	dependencies = {
+		"hrsh7th/cmp-nvim-lsp",
+		{ "antosha417/nvim-lsp-file-operations", config = true },
+	},
 
-    -- import cmp-nvim-lsp plugin
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+	custom_border = {
+  { "┌", "FloatBorder" }, -- Top left
+  { "─", "FloatBorder" }, -- Top
+  { "┐", "FloatBorder" }, -- Top right
+  { "│", "FloatBorder" }, -- Left
+  { "└", "FloatBorder" }, -- Bottom left
+  { "─", "FloatBorder" }, -- Bottom
+  { "┘", "FloatBorder" }, -- Bottom right
+  { "│", "FloatBorder" }, -- Right
+},
 
-    local keymap = vim.keymap -- for conciseness
+	config = function()
+		-- import lspconfig plugin
+		local lspconfig = require("lspconfig")
 
-    local opts = { noremap = true, silent = true }
-    local on_attach = function(client, bufnr)
-      opts.buffer = bufnr
+		-- import cmp-nvim-lsp plugin
+		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-      -- set keybinds
-      opts.desc = "Show LSP references"
-      keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+		local keymap = vim.keymap -- for conciseness
 
-      opts.desc = "Go to declaration"
-      keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
+		local opts = { noremap = true, silent = true }
+		local on_attach = function(client, bufnr)
+			opts.buffer = bufnr
 
-      opts.desc = "Show LSP definitions"
-      keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+			-- set keybinds
+			opts.desc = "Show LSP references"
+			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
-      opts.desc = "Show LSP implementations"
-      keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
+			opts.desc = "Go to declaration"
+			keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
 
-      opts.desc = "Show LSP type definitions"
-      keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+			opts.desc = "Show LSP definitions"
+			keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
 
-      opts.desc = "See available code actions"
-      keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+			opts.desc = "Show LSP implementations"
+			keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 
-      opts.desc = "Smart rename"
-      keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+			opts.desc = "Show LSP type definitions"
+			keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
-      opts.desc = "Show buffer diagnostics"
-      keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+			opts.desc = "See available code actions"
+			keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
-      opts.desc = "Show line diagnostics"
-      keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+			opts.desc = "Smart rename"
+			keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
-      opts.desc = "Go to previous diagnostic"
-      keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+			opts.desc = "Show buffer diagnostics"
+			keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
-      opts.desc = "Go to next diagnostic"
-      keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+			opts.desc = "Show line diagnostics"
+			keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
-      opts.desc = "Show documentation for what is under cursor"
-      keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+			opts.desc = "Go to previous diagnostic"
+			keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
 
-      opts.desc = "Restart LSP"
-      keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-    end
+			opts.desc = "Go to next diagnostic"
+			keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = cmp_nvim_lsp.default_capabilities()
+			opts.desc = "Show documentation for what is under cursor"
+			keymap.set("n", "K", function() vim.lsp.buf.hover(nil, { border = custom_border }) end, opts)
 
-    -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
+			-- keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+
+			opts.desc = "Restart LSP"
+			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+		end
+
+		-- used to enable autocompletion (assign to every lsp server config)
+		local capabilities = cmp_nvim_lsp.default_capabilities()
+
+		--border around documentation
+		-- Add the border on hover and on signature help popup window
+
+		-- Change the Diagnostic symbols in the sign column (gutter)
+		-- (not in youtube nvim video)
+		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+		for type, icon in pairs(signs) do
+			local hl = "DiagnosticSign" .. type
+			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+		end
 
 		-- configure python server
-    lspconfig["pyright"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
+		lspconfig["pyright"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 
-    })
-
-		lspconfig['solidity'].setup({
-			cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
-			filetypes = { 'solidity' },
-      capabilities = capabilities,
+		lspconfig["solidity"].setup({
+			cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+			filetypes = { "solidity" },
+			capabilities = capabilities,
 			single_file_support = true,
 			on_attach = on_attach,
-			require("lspconfig.util").root_pattern "foundry.toml",
-		 })
+			require("lspconfig.util").root_pattern("foundry.toml"),
+		})
 
-		lspconfig['svelte'].setup({
+		lspconfig["svelte"].setup({
 			cmd = { "svelteserver", "--stdio" },
 			filetypes = { "svelte" },
-      capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig['html'].setup({
-			filetypes = { "html", "svelte" ,"typescript", "typescriptreact", "typescript.tsx", "javascript"  },
-      capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig['cssls'].setup({
-			filetypes = { "html",  "svelte" ,"typescript", "typescriptreact", "typescript.tsx", "javascript"  },
-      capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		lspconfig["tsserver"].setup({
-			filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript"  },
-      capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig['rust_analyzer'].setup({
 			capabilities = capabilities,
-			 on_attach = on_attach,
-			 settings = {
-				 ["rust-analyzer"] = {
-					 cargo = {
-						 allFeatures = true,
-						 loadOutDirsFromCheck = true,
-						 runBuildScripts = true,
-					 },
-					 checkOnSave = {
-						 allFeatures = true,
-						 command = "clippy",
-						 extraArgs = { "--no-deps" },
-					 },
-					 procMacro = {
-						 enable = true,
-						 ignored = {
-							 ["async-trait"] = { "async_trait" },
-							 ["napi-derive"] = { "napi" },
-							 ["async-recursion"] = { "async_recursion" },
-						 },
-					 },
-				 },
-			 },
-			})
+			on_attach = on_attach,
+		})
 
-    -- configure lua server (with special settings)
-    lspconfig["lua_ls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = { -- custom settings for lua
-        Lua = {
+		lspconfig["gopls"].setup({
+			cmd = { "gopls" },
+			filetypes = { "go", "gomod", "gowork", "gotmpl" },
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				gopls = {
+					gofumpt = true,
+					completeUnimported = true,
+					usePlaceholders = true,
+				},
+			},
+		})
 
-          -- make the language server recognize "vim" global
-          diagnostics = {
-            globals = { "vim" },
-          },
-          workspace = {
-            -- make language server aware of runtime files
-            library = {
-              [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-              [vim.fn.stdpath("config") .. "/lua"] = true,
-            },
-          },
-        },
-      },
-    })
-  end,
+		lspconfig["html"].setup({
+
+			filetypes = {
+				"css",
+				"vue",
+				"html",
+				"xhtml",
+				"svelte",
+				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
+				"javascript",
+			},
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		-- lspconfig['nvim-ts-autotag'].setup({
+		-- 	filetypes = {"css","vue", "html", "svelte" ,"typescript", "typescriptreact", "typescript.tsx", "javascript"  },
+		--   capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- })
+
+		lspconfig["cssls"].setup({
+			filetypes = { "css", "vue", "svelte", "typescript", "typescriptreact", "typescript.tsx", "javascript" },
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig["ts_ls"].setup({
+			filetypes = { "typescript", "vue", "typescriptreact", "typescript.tsx", "javascript" },
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig["rust_analyzer"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				["rust-analyzer"] = {
+					cargo = {
+						allFeatures = true,
+						loadOutDirsFromCheck = true,
+						runBuildScripts = true,
+					},
+					checkOnSave = {
+						allFeatures = true,
+						command = "clippy",
+						extraArgs = { "--no-deps" },
+					},
+					procMacro = {
+						enable = true,
+						ignored = {
+							["async-trait"] = { "async_trait" },
+							["napi-derive"] = { "napi" },
+							["async-recursion"] = { "async_recursion" },
+						},
+					},
+				},
+			},
+		})
+
+		-- configure lua server (with special settings)
+		lspconfig["lua_ls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = { -- custom settings for lua
+				Lua = {
+
+					-- make the language server recognize "vim" global
+					diagnostics = {
+						globals = { "vim" },
+					},
+					workspace = {
+						-- make language server aware of runtime files
+						library = {
+							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+							[vim.fn.stdpath("config") .. "/lua"] = true,
+						},
+					},
+				},
+			},
+		})
+	end,
 }
 
 -- !black % formats file (! = terminal command, % file)

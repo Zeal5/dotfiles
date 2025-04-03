@@ -4,7 +4,7 @@ return {
 
 	config = function()
 		require('nvim-ts-autotag').setup({
-		filetypes = { "html" , "xml", "javascript", "svelte", "css" },
+		filetypes = { "html", "xml", "javascript", "svelte", "css" },
 	})
 	end
 

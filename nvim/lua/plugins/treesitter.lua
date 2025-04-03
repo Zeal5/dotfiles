@@ -1,10 +1,9 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			highlight = { enable = true, additional_vim_regex_highlight = true, },
-			ensure_installed = {"c","vim","vimdoc", "query", "python", "lua", 'rust', 'tsx', 'typescript', "svelte", "javascript", "solidity", "html", "css" },
+			ensure_installed = {"c","vim","vimdoc", "query", "python", "lua", 'rust', 'tsx', 'typescript', "svelte", "javascript", "solidity", "html",  "css","go" },
 			auto_install = true ,
 			indent = { enable = true},
 			incremental_selection = {

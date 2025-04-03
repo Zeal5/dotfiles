@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 --require("lazy").setup("plugins", {})
 
 require("lazy").setup({
+	-- Causes problem with html script tags
   {import="plugins"},
   {import="plugins.lsp"}
 })
