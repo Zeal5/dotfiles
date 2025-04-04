@@ -1,0 +1,46 @@
+[global]
+    font = Monospace 10
+		alignment = center
+    # Align message text vertically
+    vertical_alignment = center
+		# frame settings
+    frame_color = "#33ccffee"
+		frame_width = 2
+    corner_radius = 10
+
+	  # Placement of the notification at top
+		offset = 8
+		origin = top-right
+
+    separator_color = "#282828"
+		follow = mouse
+
+		#%a appname
+		#%s summary
+		#%b body
+		#%i iconname (including its path)
+		#%I iconname (without its path)
+		#%p progress value ([ 0%] to [100%])
+		#%n progress value without any extra characters
+		#%% Literal %
+		format = "<b>%a</b>\n<i>%s</i>\n%b\n%i"
+
+		mouse_left_click = close_current
+    mouse_right_click = do_action
+
+[urgency_low]
+    background = "#282828"
+		foreground = "#00ff99ee"
+		timeout = 5
+
+[urgency_normal]
+    background = "#202632"
+    foreground = "#ebdbb2"
+		timeout = 10
+
+[urgency_critical]
+		background = "#282828"
+		foreground = "#ff5555"
+
+		timeout = 0
+
