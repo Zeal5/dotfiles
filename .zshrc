@@ -50,9 +50,9 @@ zinit cdreplay -q
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
-bindkey '^H' backward-kill-word
 bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
+bindkey '^H' backward-kill-word
 
 # History
 HISTSIZE=5000
