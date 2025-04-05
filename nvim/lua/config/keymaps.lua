@@ -1,3 +1,6 @@
+vim.opt.clipboard = 'unnamedplus'
+
+
 MAP = vim.keymap.set
 
 vim.g.mapleader = " "
@@ -76,6 +79,7 @@ function FormatCode()
 		file_type == "javascript"
 		or file_type == "css"
 		or file_type == "typescriptreact"
+		or file_type == "typescript"
 		or file_type == "html"
 		or file_type == "json"
 		or file_type == "xhtml"
