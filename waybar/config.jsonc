@@ -1,10 +1,30 @@
 {
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["hyprland/window"] ,
-    "modules-right": ["tray","memory","disk", "pulseaudio","battery","clock"],
+    "modules-right": [ "network#speed" ,"tray","memory","disk", "pulseaudio","battery","clock"],
 	"hyprland/window": {
 	"format": "{initialTitle}",
 },
+"network#speed": {
+		"font-family": "JetBrainsMono Nerd Font monospace",
+"interface": "enp2s0",
+"interval": 1,
+"format": "{ifname}",
+"format-wifi": "  {bandwidthDownBytes:>6}   {bandwidthUpBytes:>6} {icon}",
+"format-ethernet": "  {bandwidthDownBytes:>6}    {bandwidthUpBytes:>6} {icon}",
+"format-disconnected": "󰌙",
+"tooltip-format": "{ifname : ipaddr}",
+"format-linked": "󰈁 {ifname} (No IP)",
+"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+"tooltip-format-ethernet": "{ifname} 󰌘",
+"tooltip-format-disconnected": "󰌙 Disconnected",
+"min-length": 25,
+"max-length": 25,
+"format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
+},
+
+
+
 	"hyprland/workspaces": {
 	"format": "{name}{icon}",
 	"format-icons": {
@@ -14,7 +34,7 @@
 	},
 },
 "memory": {
-  "format": "💾{used:0.1f}/{total:0.1f} GB",
+					"format": "💾{used:0.1f}/{total:0.1f} GB",
 		"align": "center",
 },
 	"disk" :{

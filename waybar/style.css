@@ -99,3 +99,12 @@ window#waybar {
 /* } */
 #window{
 	padding: 5px;}
+
+
+#network#speed {
+    min-width: 120px;    /* Optional: minimum width for consistent appearance */
+    font-weight: bold;   /* Optional: bold text */
+	letter-spacing: 1px;
+	padding-left: 5px;
+
+}
