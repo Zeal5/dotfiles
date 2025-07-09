@@ -72,9 +72,9 @@ function FormatCode()
 	if file_type == "python" then
 		vim.api.nvim_command("silent !black %")
 		print("Formatted Python code.")
-	elseif file_type == "go" then
-		vim.api.nvim_command("silent !/home/bot/go/bin/gofumpt -w %")
-		print("Formatted Go File")
+	elseif file_type == "java" then
+		vim.api.nvim_command("silent !/home/bot/.local/share/nvim/mason/bin/google-java-format -i %")
+		print("Formatted Java code.")
 	elseif
 		file_type == "javascript"
 		or file_type == "css"
@@ -92,6 +92,9 @@ function FormatCode()
 	elseif file_type == "solidity" then
 		vim.api.nvim_command("silent !forge fmt %")
 		print("Formatted Solidity File")
+	elseif file_type == "go" then
+		vim.api.nvim_command("silent !/home/bot/go/bin/gofumpt -w %")
+		print("Formatted Go File")
 	elseif file_type == "rust" then
 		vim.api.nvim_command("silent !rustfmt %")
 		print("Formatted Rust code.")
