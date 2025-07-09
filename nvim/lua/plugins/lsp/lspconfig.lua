@@ -26,10 +26,9 @@ return {
 
 		local keymap = vim.keymap -- for conciseness
 
-		local opts = { noremap = true, silent = true }
 		local on_attach = function(client, bufnr)
-			opts.buffer = bufnr
 
+		local opts = { buffer = bufnr, noremap = true, silent = true }
 			-- set keybinds
 			opts.desc = "Show LSP references"
 			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
@@ -150,12 +149,6 @@ return {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
-
-		-- lspconfig['nvim-ts-autotag'].setup({
-		-- 	filetypes = {"css","vue", "html", "svelte" ,"typescript", "typescriptreact", "typescript.tsx", "javascript"  },
-		--   capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- })
 
 		lspconfig["cssls"].setup({
 			filetypes = { "css", "vue", "svelte", "typescriptreact", "typescript.tsx", "javascript" },
