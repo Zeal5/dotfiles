@@ -7,15 +7,15 @@ return {
 	},
 
 	custom_border = {
-  { "┌", "FloatBorder" }, -- Top left
-  { "─", "FloatBorder" }, -- Top
-  { "┐", "FloatBorder" }, -- Top right
-  { "│", "FloatBorder" }, -- Left
-  { "└", "FloatBorder" }, -- Bottom left
-  { "─", "FloatBorder" }, -- Bottom
-  { "┘", "FloatBorder" }, -- Bottom right
-  { "│", "FloatBorder" }, -- Right
-},
+		{ "┌", "FloatBorder" }, -- Top left
+		{ "─", "FloatBorder" }, -- Top
+		{ "┐", "FloatBorder" }, -- Top right
+		{ "│", "FloatBorder" }, -- Left
+		{ "└", "FloatBorder" }, -- Bottom left
+		{ "─", "FloatBorder" }, -- Bottom
+		{ "┘", "FloatBorder" }, -- Bottom right
+		{ "│", "FloatBorder" }, -- Right
+	},
 
 	config = function()
 		-- import lspconfig plugin
@@ -65,7 +65,9 @@ return {
 			keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
 			opts.desc = "Show documentation for what is under cursor"
-			keymap.set("n", "K", function() vim.lsp.buf.hover(nil, { border = custom_border }) end, opts)
+			keymap.set("n", "K", function()
+				vim.lsp.buf.hover(nil, { border = custom_border })
+			end, opts)
 
 			-- keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
@@ -80,12 +82,22 @@ return {
 		-- Add the border on hover and on signature help popup window
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
-		-- (not in youtube nvim video)
-		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		end
+		vim.diagnostic.config({
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = " ", -- Error
+					[vim.diagnostic.severity.WARN] = " ", -- Warning
+					[vim.diagnostic.severity.INFO] = "ℹ ", -- Info
+					[vim.diagnostic.severity.HINT] = " ", -- Hint (using a Nerd Font icon)
+				},
+				numhl = {
+					[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+					[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+					[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+					[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+				},
+			},
+		})
 
 		-- configure python server
 		lspconfig["pyright"].setup({
@@ -131,7 +143,6 @@ return {
 				"html",
 				"xhtml",
 				"svelte",
-				"typescript",
 				"typescriptreact",
 				"typescript.tsx",
 				"javascript",
@@ -147,12 +158,18 @@ return {
 		-- })
 
 		lspconfig["cssls"].setup({
-			filetypes = { "css", "vue", "svelte", "typescript", "typescriptreact", "typescript.tsx", "javascript" },
+			filetypes = { "css", "vue", "svelte", "typescriptreact", "typescript.tsx", "javascript" },
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
 		lspconfig["ts_ls"].setup({
 			filetypes = { "typescript", "vue", "typescriptreact", "typescript.tsx", "javascript" },
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig["jdtls"].setup({
+			filetypes = { "java" },
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
