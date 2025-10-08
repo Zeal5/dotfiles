@@ -21,6 +21,8 @@
 $env.config = {
 		show_banner: false, 
 		buffer_editor : "nvim"
+		edit_mode: "vi"
+	
 }
 
 
