@@ -6,18 +6,17 @@ return {
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
 
-	custom_border = {
-		{ "┌", "FloatBorder" }, -- Top left
-		{ "─", "FloatBorder" }, -- Top
-		{ "┐", "FloatBorder" }, -- Top right
-		{ "│", "FloatBorder" }, -- Left
-		{ "└", "FloatBorder" }, -- Bottom left
-		{ "─", "FloatBorder" }, -- Bottom
-		{ "┘", "FloatBorder" }, -- Bottom right
-		{ "│", "FloatBorder" }, -- Right
-	},
-
 	config = function()
+		-- local custom_border = {
+		-- 	{ "┌", "FloatBorder" }, -- Top left
+		-- 	{ "─", "FloatBorder" }, -- Top
+		-- 	{ "┐", "FloatBorder" }, -- Top right
+		-- 	{ "│", "FloatBorder" }, -- Left
+		-- 	{ "└", "FloatBorder" }, -- Bottom left
+		-- 	{ "─", "FloatBorder" }, -- Bottom
+		-- 	{ "┘", "FloatBorder" }, -- Bottom right
+		-- 	{ "│", "FloatBorder" }, -- Right
+		-- }
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
 
@@ -64,7 +63,7 @@ return {
 
 			opts.desc = "Show documentation for what is under cursor"
 			keymap.set("n", "K", function()
-				vim.lsp.buf.hover( { border = "single", max_height = 25, max_width = 120 })
+				vim.lsp.buf.hover({ border = "single", max_height = 25, max_width = 120 })
 			end, opts)
 
 			-- keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
@@ -82,6 +81,10 @@ return {
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		vim.diagnostic.config({
 			virtual_text = true,
+			float = {
+				border = "rounded",
+				source = "always",
+			},
 			signs = {
 				text = {
 					[vim.diagnostic.severity.ERROR] = " ", -- Error
@@ -98,6 +101,21 @@ return {
 			},
 		})
 
+		local servers = {
+			"basedpyright",
+			"ruff",
+			"solidity",
+			"solidity_ls",
+			"tsserver",
+			"svelte",
+			"gopls",
+			"html",
+			"cssls",
+			"ts_ls",
+			"jdtls",
+			"rust_analyzer",
+			"lua_ls",
+		}
 		-- configure python server
 		-- switched from pyright to basedpyright
 		vim.lsp.config("basedpyright", {
@@ -119,7 +137,7 @@ return {
 					},
 				},
 			},
-		}, vim.lsp.enable("basedpyright"))
+		})
 
 		vim.lsp.config("ruff", {
 			init_options = {
@@ -134,7 +152,7 @@ return {
 				},
 			},
 			on_attach = on_attach,
-		}, vim.lsp.enable("ruff"))
+		})
 
 		vim.lsp.config("solidity", {
 			cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
@@ -143,14 +161,14 @@ return {
 			single_file_support = true,
 			on_attach = on_attach,
 			require("lspconfig.util").root_pattern("foundry.toml"),
-		}, vim.lsp.enable("solidity"))
+		})
 
 		vim.lsp.config("svelte", {
 			cmd = { "svelteserver", "--stdio" },
 			filetypes = { "svelte" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-		}, vim.lsp.enable("svelte"))
+		})
 
 		vim.lsp.config("gopls", {
 			cmd = { "gopls" },
@@ -164,7 +182,7 @@ return {
 					usePlaceholders = true,
 				},
 			},
-		}, vim.lsp.enable("gopls"))
+		})
 
 		vim.lsp.config("html", {
 
@@ -180,25 +198,25 @@ return {
 			},
 			capabilities = capabilities,
 			on_attach = on_attach,
-		}, vim.lsp.enable("html"))
+		})
 
 		vim.lsp.config("cssls", {
 			filetypes = { "css", "vue", "svelte", "typescriptreact", "typescript.tsx", "javascript" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-		}, vim.lsp.enable("cssls"))
+		})
 
 		vim.lsp.config("ts_ls", {
 			filetypes = { "typescript", "vue", "typescriptreact", "typescript.tsx", "javascript" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-		}, vim.lsp.enable("ts_ls"))
+		})
 
 		vim.lsp.config("jdtls", {
 			filetypes = { "java" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-		}, vim.lsp.enable("jdtls"))
+		})
 
 		vim.lsp.config("rust_analyzer", {
 			capabilities = capabilities,
@@ -225,7 +243,7 @@ return {
 					},
 				},
 			},
-		}, vim.lsp.enable("rust_analyzer"))
+		})
 
 		-- configure lua server (with special settings)
 		vim.lsp.config("lua_ls", {
@@ -247,7 +265,8 @@ return {
 					},
 				},
 			},
-		}, vim.lsp.enable("lua_ls"))
+		})
+		vim.lsp.enable(servers)
 	end,
 }
 

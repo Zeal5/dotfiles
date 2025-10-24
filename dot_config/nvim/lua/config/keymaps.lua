@@ -48,7 +48,7 @@ MAP("n", "N", "Nzz")
 -- TABS/BUFFERS:
 -- Map Ctrl+t to open a new tab:
 MAP("n", "<C-t>", ":tabnew<CR>")
--- MAP('n', '<C-t>', ':terminal<CR>')
+-- MAP('n', '<leader-t>', ':terminal<CR>')
 -- -- next tab
 MAP("n", "<Tab>", "gt")
 -- -- previous tab
