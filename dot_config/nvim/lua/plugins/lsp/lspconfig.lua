@@ -64,7 +64,7 @@ return {
 
 			opts.desc = "Show documentation for what is under cursor"
 			keymap.set("n", "K", function()
-				vim.lsp.buf.hover(nil, { border = custom_border })
+				vim.lsp.buf.hover( { border = "single", max_height = 25, max_width = 120 })
 			end, opts)
 
 			-- keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
@@ -100,7 +100,7 @@ return {
 
 		-- configure python server
 		-- switched from pyright to basedpyright
-		lspconfig["basedpyright"].setup({
+		vim.lsp.config("basedpyright", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = {
@@ -110,7 +110,7 @@ return {
 							reportUnusedImport = "none",
 						},
 						autoSearchPaths = true,
-						typeCheckingMode = "strict", -- "off", "basic", "standard", "strict", "recommended", "all"]
+						typeCheckingMode = "basic", -- "off", "basic", "standard", "strict", "recommended", "all"]
 						useLibraryCodeForTypes = true,
 						diagnosticMode = "openFilesOnly",
 						inlayHints = {
@@ -119,34 +119,40 @@ return {
 					},
 				},
 			},
-		})
+		}, vim.lsp.enable("basedpyright"))
 
-		lspconfig["ruff"].setup({
+		vim.lsp.config("ruff", {
 			init_options = {
 				settings = {
-					logLovel = "debug",
+					logLovel = "error",
+				},
+				ignore = {
+					"ANN", -- annotations (missing type hints)
+					"D", -- docstring errors
+					"TCH", -- type checking hints
+					"PYI", -- pyi type stub rules
 				},
 			},
 			on_attach = on_attach,
-		})
+		}, vim.lsp.enable("ruff"))
 
-		lspconfig["solidity"].setup({
+		vim.lsp.config("solidity", {
 			cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
 			filetypes = { "solidity" },
 			capabilities = capabilities,
 			single_file_support = true,
 			on_attach = on_attach,
 			require("lspconfig.util").root_pattern("foundry.toml"),
-		})
+		}, vim.lsp.enable("solidity"))
 
-		lspconfig["svelte"].setup({
+		vim.lsp.config("svelte", {
 			cmd = { "svelteserver", "--stdio" },
 			filetypes = { "svelte" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-		})
+		}, vim.lsp.enable("svelte"))
 
-		lspconfig["gopls"].setup({
+		vim.lsp.config("gopls", {
 			cmd = { "gopls" },
 			filetypes = { "go", "gomod", "gowork", "gotmpl" },
 			capabilities = capabilities,
@@ -158,9 +164,9 @@ return {
 					usePlaceholders = true,
 				},
 			},
-		})
+		}, vim.lsp.enable("gopls"))
 
-		lspconfig["html"].setup({
+		vim.lsp.config("html", {
 
 			filetypes = {
 				"css",
@@ -174,26 +180,27 @@ return {
 			},
 			capabilities = capabilities,
 			on_attach = on_attach,
-		})
+		}, vim.lsp.enable("html"))
 
-		lspconfig["cssls"].setup({
+		vim.lsp.config("cssls", {
 			filetypes = { "css", "vue", "svelte", "typescriptreact", "typescript.tsx", "javascript" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-		})
-		lspconfig["ts_ls"].setup({
+		}, vim.lsp.enable("cssls"))
+
+		vim.lsp.config("ts_ls", {
 			filetypes = { "typescript", "vue", "typescriptreact", "typescript.tsx", "javascript" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-		})
+		}, vim.lsp.enable("ts_ls"))
 
-		lspconfig["jdtls"].setup({
+		vim.lsp.config("jdtls", {
 			filetypes = { "java" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-		})
+		}, vim.lsp.enable("jdtls"))
 
-		lspconfig["rust_analyzer"].setup({
+		vim.lsp.config("rust_analyzer", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = {
@@ -218,10 +225,10 @@ return {
 					},
 				},
 			},
-		})
+		}, vim.lsp.enable("rust_analyzer"))
 
 		-- configure lua server (with special settings)
-		lspconfig["lua_ls"].setup({
+		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = { -- custom settings for lua
@@ -240,7 +247,7 @@ return {
 					},
 				},
 			},
-		})
+		}, vim.lsp.enable("lua_ls"))
 	end,
 }
 
