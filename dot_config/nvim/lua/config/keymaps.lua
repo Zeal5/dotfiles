@@ -13,7 +13,7 @@ MAP("n", "<leader>l", "<cmd>Lazy<CR>", { desc = "Lazy" })
 MAP("i", "jj", "<ESC>", { desc = "Switch to noMAPal mode" })
 
 -- copy to system clipboard
-vim.g.clipboard = 'osc52'
+-- vim.g.clipboard = 'osc52'
 MAP("v", "<leader>cp", [["+y]], { desc = "copy selected text" })
 MAP("n", "<leader>cp", [["+Y]], { desc = "copy line" })
 
